@@ -1,0 +1,133 @@
+{% macro chipset(prefer) -%}
+  background: url('{{ dynamic }}/themes/legacy_chipset.png?name=[[{{prefer}}Theme]]');
+  background-repeat: repeat-x;
+{%- endmacro %}
+
+{% macro cssreset() -%}
+  margin: 0; padding: 0; border: none; outline: none;
+  font-size: 100%; font-style: normal; font-weight: normal;
+  text-decoration: none; vertical-align: baseline;
+{%- endmacro %}
+
+{% macro express(prefer) -%}
+  <blockquote class="vlaah-candybar-{{ prefer }}" style="
+       {{ cssreset() }}
+       position: absolute;
+       height: 20px;
+       overflow: hidden;
+       {{ 'left' if prefer == 'plus' else 'right' }}: 0;
+     ">
+    <form action="{{ topic_base|e }}/[[urlencode(context)]]" method="post"
+          onsubmit="vlaahEmbed.load('[[context]]', this); return false;"
+          style="{{ cssreset() }} font-size: 0;">
+      <input type="hidden" name="prefer" value="{{ prefer }}" />
+      <input src="{{ static|e }}/images/transparent.gif"
+             type="image" alt="{{ prefer }}"
+             class="vlaah-{{ prefer }}-express" style="
+               {{ cssreset() }}
+               {{ chipset(prefer) }}
+               {% if prefer == 'plus' -%}
+                 background-position: -155px -45px;
+               {%- elif prefer == 'minus' -%}
+                 background-position: -205px -45px;
+               {%- endif %}
+               width: 20px; height: 20px;
+               text-indent: -9999px;
+             "
+             onmousedown="this.style.backgroundPosition = '
+               {%- if prefer == 'plus' %}-180px
+               {%- elif prefer == 'minus' %}-230px
+             {%- endif %} -45px';"
+             onmouseout="this.style.backgroundPosition = '
+               {%- if prefer == 'plus' %}-155px
+               {%- elif prefer == 'minus' %}-205px
+             {%- endif %} -45px';"
+      />
+    </form>
+    <form style="display: none; {{ cssreset() }}"
+          onsubmit="vlaahEmbed.load('[[context]]', this); return false;">
+      <input type="hidden" name="_method" value="delete" />
+      <input src="{{ static|e }}/images/transparent.gif"
+             type="image" alt="{{ prefer }}"
+             class="vlaah-plus-cancel" style="
+               {{ cssreset() }}
+               {{ chipset(prefer) }}
+               {% if prefer == 'plus' -%}
+                 background-position: -180px -45px;
+               {%- elif prefer == 'minus' -%}
+                 background-position: -230px -45px;
+               {%- endif %}
+               width: 20px; height: 20px;
+               text-indent: -9999px;
+             " />
+    </form>
+  </blockquote>
+{%- endmacro %}
+
+<div id="[[id]]" class="vlaah-candybar"
+     style="position: relative; width: 100%; {{ cssreset() }}">
+  {{ express('plus') }}
+  {{ express('minus') }}
+  <div class="vlaah-bar-minus" style="
+         {{ cssreset() }}
+         {{ chipset('minus') }}
+         position: relative;
+         background-position: 0 -160px;
+         height: 20px;
+         margin: 0 20px;
+       ">
+      <a href="{{ topic_base|e }}/[[urlencode(context)]]"
+         style="{{ cssreset() }} text-decoration: none; cursor: pointer;">
+          <span class="vlaah-text" style="
+               {{ cssreset() }}
+               position: absolute;
+               width: 100%;
+               height: 20px;
+               line-height: 20px;
+               overflow: hidden;
+               text-align: center;
+               color: #fff;
+               font: bolder 11px/20px 'Trebuchet MS', sans-serif;
+             ">
+            <s class="vlaah-context"
+               style="
+                 {{ cssreset() }}
+                 font-weight: bolder;
+                 text-decoration: none;">[[context]]</s>
+            <u class="vlaah-degree"
+               style="
+                 {{ cssreset() }}
+                 display: none;
+                 font-weight: bolder;
+                 text-decoration: none;">
+            </u>
+          </span>
+          <i class="vlaah-loading" style="
+               {{ cssreset() }}
+               display: none;
+               position: absolute;
+               top: 0;
+               width: 100%;
+               height: 20px;
+               background: url('{{ host }}/static/load.gif') no-repeat center;
+               text-indent: -9999px;
+             ">Loading</i>
+      </a>
+      <u class="vlaah-bar-plus" style="
+           {{ cssreset() }}
+           display: block;
+           {{ chipset('plus') }}
+           background-position: 0 -160px;
+           height: 20px;
+           width: 50%;
+           text-decoration: none;
+         "></u>
+  </div>
+  <div class="vlaah-meta" style="display: none;">
+    <q title="topic_base">{{ topic_base|e }}</q>
+    <q title="context">{{ context|e }}</q>
+  </div>
+  <div class="vlaah-loaded" id="[[id]]-scripts"
+       style="visibility: hidden; position: absolute;"></div>
+</div>
+

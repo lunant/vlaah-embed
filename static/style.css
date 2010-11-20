@@ -1,0 +1,32 @@
+* { margin: 0; padding: 0; }
+
+body { padding: 20px 50px; }
+h1, h2, h3 { padding: 5px 0; }
+
+pre code, .preview {
+  display: block;
+  background: #eee;
+  padding: 10px;
+  border: 1px solid;
+  border-color: #ddd #ccc #bbb;
+  margin: 5px 0;
+}
+
+.preview {
+  width: 200px;
+  background: #fff;
+}
+
+.usage, dl {
+  padding: 5px;
+  padding-left: 20px;
+  margin: 5px 0 10px;
+}
+
+dt {
+  font-weight: bolder;
+}
+dd {
+  margin-left: 10px;
+  margin-bottom: 5px;
+}

@@ -1,0 +1,90 @@
+{% macro usage(title, description) -%}
+  <div class="usage">
+    <h3>{{ title|e }}</h3>
+    <pre><code>{{ caller()|e }}</code></pre>
+    <div class="preview">{{ caller() }}</div>
+    <p>{{ description }}</p>
+  </div>
+{%- endmacro %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+                      "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko"> 
+<head> 
+<meta http-equiv="Content-Type"
+      content="application/xhtml+xml; charset=UTF-8" /> 
+<title>VLAAH Embed</title> 
+<link rel="stylesheet" type="text/css" href="/static/style.css" /> 
+<link rel="shortcut icon" href="/static/favicon.ico" />
+</head> 
+<body> 
+<h1>VLAAH Embed</h1>
+<p>만든이: <a href="http://heungsub.net/">이흥섭</a></p>
+
+<h2 id="variables">변수</h2>
+<p>변수는 스크립트 주소에 QueryString으로 전달하거나
+   변수명 앞에 <code>$vlaah_</code>를 붙여서 JavaScript 전역변수로
+   지정할 수 있습니다.</p>
+<dl>
+  <dt><var>context</var></dt>
+  <dd>주제 문자열, 지정하지 않을 경우 페이지 URL</dd>
+  <dt><var>container_id</var></dt>
+  <dd>컨테이너 엘리멘트 id, 지정하지 않을 경우
+      <code>document.write()</code>함</dd>
+  <dt><var>after_ready</var></dt>
+  <dd><var>container_id</var>가 지정되어있을 경우
+      <code>window</code>가 <code>load</code>된 후 캔디바를 추가할지 여부</dd>
+  <dt><var>plus_theme</var></dt>
+  <dd>플러스 테마 이름, 지정하지 않을 경우 clover</dd>
+  <dt><var>minus_theme</var></dt>
+  <dd>마이너스 테마 이름, 지정하지 않을 경우 tomato</dd>
+  <dt><var>show_context</var></dt>
+  <dd>주제 문자열 표시</dd>
+</dl>
+
+<h2 id="usages">사용법</h2>
+
+{% call usage('기본',
+  '<code>document.write()</code>로 캔디바를 추가합니다. '
+  + '주제는 현재 페이지의 주소가 됩니다.') -%}
+<script type="text/javascript" src="{{ embed|e }}"></script>
+{%- endcall %}
+
+{% call usage('주제 지정', '주제를 임의의 문자열로 지정합니다.') -%}
+<script type="text/javascript" src="{{ embed|e }}?context=%EC%9D%B4%EB%AA%85%EB%B0%95"></script>
+{%- endcall %}
+
+{% call usage('주제 표시', '주제를 캔디바에 표시합니다. 커서를 올리면 점수가 표시됩니다.') -%}
+<script type="text/javascript" src="{{ embed|e }}?context=%EC%9D%B4%EB%AA%85%EB%B0%95&amp;show_context=true"></script>
+{%- endcall %}
+
+{% call usage('컨테이너 지정',
+  '캔디바가 추가될 컨테이너 엘리멘트의 id를 지정합니다.') -%}
+<div id="vlaah" style="border: 3px double #000;"></div>
+<script type="text/javascript" src="{{ embed|e }}?container_id=vlaah"></script>
+{%- endcall %}
+
+{% call usage('페이지 로드 후 추가',
+  '페이지 로드가 완료된 후에 캔디바가 추가됩니다. '
+  + '한 페이지에 여러 캔디바를 보여줘야할 경우 속도문제를 해결해줍니다.') -%}
+<div id="lazy-vlaah" style="border: 3px double #000;"></div>
+<script type="text/javascript" src="{{ embed|e }}?container_id=lazy-vlaah&amp;after_ready=true"></script>
+{%- endcall %}
+
+{% call usage('테마 지정', '캔디바 테마를 지정합니다.') -%}
+<script type="text/javascript" src="{{ embed|e }}?plus_theme=violet&amp;minus_theme=orange"></script>
+{%- endcall %}
+
+{% call usage('JavaScript로 변수 지정',
+  '') -%}
+<script type="text/javascript">
+  vlaahEmbed.initOptions = {
+    context: '나만 밝히는 여자',
+    plus_theme: 'gmail',
+    minus_theme: 'ketchup',
+    show_context: true
+  };
+</script>
+<script type="text/javascript" src="{{ embed|e }}"></script>
+{%- endcall %}
+</body> 
+</html>
