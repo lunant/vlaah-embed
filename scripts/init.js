@@ -67,16 +67,14 @@ OTHER DEALINGS IN THE SOFTWARE.
             },
 
             load: function(context, form) {
-                var id, candybars = $.getCandybars(base64.encode(context));
-                for (id in candybars) {
-                    candybars[id].element && candybars[id].showLoading();
-                }
-
-                var callback = 'vlaahEmbed.update("' + base64.encode(context) + '")';
+                var key = base64.encode(context);
+                var callback = 'vlaahEmbed.update("' + key + '")';
                 var url, params = '__callback__=' + callback;
 
                 if (form) {
                     url = form.action;
+                    // temporarily deprecate the real-time voting
+                    open(url, '_blank'); return;
                     var set_method = false;
                     var inputs = form.elements;
                     for (var i = 0; i < inputs.length; ++ i) {
@@ -92,6 +90,11 @@ OTHER DEALINGS IN THE SOFTWARE.
                     url = $.topic_base + '/' + urlencode(context);
                 }
                 url += '?' + params;
+
+                var id, candybars = $.getCandybars(base64.encode(context));
+                for (id in candybars) {
+                    candybars[id].element && candybars[id].showLoading();
+                }
 
                 var scripts_id = id + '-scripts';
                 var scripts = document.getElementById(scripts_id);
