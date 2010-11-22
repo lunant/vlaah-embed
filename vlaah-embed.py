@@ -16,12 +16,9 @@ env.filters["unescapejs"] = simplejson.JSONDecoder().decode
 env.filters["urlencode"] = urllib.quote
 
 
-PROD_URLS = {
-        #  'topic_base': 'http://vlaah.com',
-        'topic_base': 'http://h.xym.kr:8912',
-  'dynamic': 'http://dynamic.vlaah.com',
-  'static': 'http://static.vlaah.com'
-}
+PROD_URLS = {'topic_base': 'http://vlaah.com',
+             'dynamic': 'http://dynamic.vlaah.com',
+             'static': 'http://static.vlaah.com'}
 DEV_URLS = PROD_URLS
 
 
