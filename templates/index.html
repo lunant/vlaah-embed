@@ -48,37 +48,37 @@
 {% call usage('기본',
   '<code>document.write()</code>로 캔디바를 추가합니다. '
   + '주제는 현재 페이지의 주소가 됩니다.') -%}
-<script type="text/javascript" src="{{ embed|e }}"></script>
+<script src="{{ embed|e }}"></script>
 {%- endcall %}
 
 {% call usage('주제 지정', '주제를 임의의 문자열로 지정합니다.') -%}
-<script type="text/javascript" src="{{ embed|e }}?context=%EC%9D%B4%EB%AA%85%EB%B0%95"></script>
+<script src="{{ embed|e }}?context=%EC%9D%B4%EB%AA%85%EB%B0%95"></script>
 {%- endcall %}
 
 {% call usage('주제 표시', '주제를 캔디바에 표시합니다. 커서를 올리면 점수가 표시됩니다.') -%}
-<script type="text/javascript" src="{{ embed|e }}?context=%EC%9D%B4%EB%AA%85%EB%B0%95&amp;show_context=true"></script>
+<script src="{{ embed|e }}?context=%EC%9D%B4%EB%AA%85%EB%B0%95&amp;show_context=true"></script>
 {%- endcall %}
 
 {% call usage('컨테이너 지정',
   '캔디바가 추가될 컨테이너 엘리멘트의 id를 지정합니다.') -%}
 <div id="vlaah" style="border: 3px double #000;"></div>
-<script type="text/javascript" src="{{ embed|e }}?container_id=vlaah"></script>
+<script src="{{ embed|e }}?container_id=vlaah"></script>
 {%- endcall %}
 
 {% call usage('페이지 로드 후 추가',
   '페이지 로드가 완료된 후에 캔디바가 추가됩니다. '
   + '한 페이지에 여러 캔디바를 보여줘야할 경우 속도문제를 해결해줍니다.') -%}
 <div id="lazy-vlaah" style="border: 3px double #000;"></div>
-<script type="text/javascript" src="{{ embed|e }}?container_id=lazy-vlaah&amp;after_ready=true"></script>
+<script src="{{ embed|e }}?container_id=lazy-vlaah&amp;after_ready=true"></script>
 {%- endcall %}
 
 {% call usage('테마 지정', '캔디바 테마를 지정합니다.') -%}
-<script type="text/javascript" src="{{ embed|e }}?plus_theme=violet&amp;minus_theme=orange"></script>
+<script src="{{ embed|e }}?plus_theme=violet&amp;minus_theme=orange"></script>
 {%- endcall %}
 
 {% call usage('JavaScript로 변수 지정',
   '') -%}
-<script type="text/javascript">
+<script>
   vlaahEmbed.initOptions = {
     context: '나만 밝히는 여자',
     plus_theme: 'gmail',
@@ -86,7 +86,7 @@
     show_context: true
   };
 </script>
-<script type="text/javascript" src="{{ embed|e }}"></script>
+<script src="{{ embed|e }}"></script>
 {%- endcall %}
 </body> 
 </html>
