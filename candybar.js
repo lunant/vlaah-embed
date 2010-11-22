@@ -107,8 +107,15 @@ function () {
         },
 
         update: function(data) {
-            this.animatePercent(data.percent.total);
-            this.getDegreeElement().innerHTML = data.degree.total;
+            var vlaah_score = data['pluses-count'] - data['minuses-count'];
+            if (vlaah_score) {
+                var denominator = data['pluses-count'] + data['minuses-count'],
+                    percent = data['pluses-count'] / denominator * 100;
+            } else {
+                var percent = 50;
+            }
+            this.animatePercent(percent);
+            this.getDegreeElement().innerHTML = vlaah_score;
             if (data.expressed) {
                 var form = this.pushButton(data.expressed);
                 form.action = this.$.topic_base + '/' + urlencode(data.comment);
@@ -118,13 +125,14 @@ function () {
                 this.pullButton('minus');
             }
             this.data = data;
+            this.percent = percent;
         },
 
         animatePercent: function(percent) {
             var self = this;
             var bar = this.getBarElement();
 
-            var from = parseFloat(this.data.percent.total);
+            var from = parseFloat(this.percent || 50);
             var to = percent;
             from = Math.round(from * 10) / 10;
             to = Math.round(to * 10) / 10;

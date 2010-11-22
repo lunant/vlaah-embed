@@ -1,10 +1,12 @@
 import os
+import sys
+sys.path.insert(0, os.path.abspath('jinja2'))
 import time
+import urllib
+import jinja2
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
-import jinja2
 from django.utils import simplejson
-import urllib
 
 
 LOADER = jinja2.FileSystemLoader(os.path.dirname(__file__))
@@ -13,16 +15,13 @@ env.filters["escapejs"] = simplejson.JSONEncoder().encode
 env.filters["unescapejs"] = simplejson.JSONDecoder().decode
 env.filters["urlencode"] = urllib.quote
 
+
 PROD_URLS = {
   'topic_base': 'http://vlaah.com',
   'dynamic': 'http://dynamic.vlaah.com',
   'static': 'http://static.vlaah.com'
 }
-DEV_URLS = {
-  'topic_base': 'http://sublaah.heungsub.net/topic',
-  'dynamic': 'http://sublaah.heungsub.net/dynamic',
-  'static': 'http://sublaah.heungsub.net/static'
-}
+DEV_URLS = PROD_URLS
 
 
 class IndexHandler(webapp.RequestHandler):
@@ -81,4 +80,3 @@ def main():
 
 if __name__ == '__main__':
   main()
-

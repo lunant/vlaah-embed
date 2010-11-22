@@ -71,7 +71,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
                 var callback = 'vlaahEmbed.update("'
                              + urlencode(context) + '")';
-                var url, params = '_xhr=on&_callback=' + callback;
+                var url, params = '__callback__=' + callback;
 
                 if (form) {
                     url = form.action;
@@ -84,7 +84,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                         if (input.name == '_method') set_method = true;
                     }
                     if (!set_method) {
-                        params += '&_method=' + form.method;
+                        params += '&__method__=' + form.method;
                     }
                 } else {
                     url = $.topic_base + '/' + urlencode(context);
