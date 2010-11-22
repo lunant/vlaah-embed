@@ -81,9 +81,9 @@ function () {
                     on_appended();
                 }
                 if (after_ready) {
-                    if (typeof w.addEventListener != 'undefined') {
+                    if (w.addEventListener !== undefined) {
                         w.addEventListener('load', appending, true);
-                    } else if (typeof w.attachEvent != 'undefined') {
+                    } else if (w.attachEvent !== undefined) {
                         w.attachEvent('onload', appending);
                     }
                 } else {
@@ -96,10 +96,11 @@ function () {
         },
 
         register: function() {
-            if (typeof this.$.candybars[this.context] == 'undefined') {
-                this.$.candybars[this.context] = {};
+            var key = base64.encode(this.context);
+            if (this.$.candybars[key] === undefined) {
+                this.$.candybars[key] = {};
             }
-            return this.$.candybars[this.context][this.id] = this;
+            return this.$.candybars[key][this.id] = this;
         },
 
         sync: function() {

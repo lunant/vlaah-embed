@@ -26,8 +26,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 (function(w) {
     if (typeof w.vlaahEmbed == 'undefined') {
         /* Helpers */
+        var base64 = {% include 'scripts/base64.js' %};
         var ie6 = false /*@cc_on || @_jscript_version < 5.7 @*/;
-        var urlencode = encodeURIComponent;
+        var urlencode = function(str) {
+            return encodeURIComponent(str).replace(/%2F/gi, '%0A');
+        };
         var applyAll = function(seq, func, args) {
             var returns = {};
             for (var x in seq) {
@@ -37,7 +40,7 @@ OTHER DEALINGS IN THE SOFTWARE.
         }
 
         /* Candybar class */
-        var Candybar = ({% include 'candybar.js' %})();
+        var Candybar = ({% include 'scripts/candybar.js' %})();
 
         /* VLAAH Embed library */
         var $;
@@ -64,13 +67,12 @@ OTHER DEALINGS IN THE SOFTWARE.
             },
 
             load: function(context, form) {
-                var id, candybars = $.getCandybars(context);
+                var id, candybars = $.getCandybars(base64.encode(context));
                 for (id in candybars) {
                     candybars[id].element && candybars[id].showLoading();
                 }
 
-                var callback = 'vlaahEmbed.update("'
-                             + urlencode(context) + '")';
+                var callback = 'vlaahEmbed.update("' + base64.encode(context) + '")';
                 var url, params = '__callback__=' + callback;
 
                 if (form) {
@@ -100,9 +102,9 @@ OTHER DEALINGS IN THE SOFTWARE.
                 scripts.appendChild(script);
             },
 
-            update: function(context) {
+            update: function(key) {
                 return function(data) {
-                    var candybars = $.getCandybars(context);
+                    var candybars = $.getCandybars(key);
                     for (var id in candybars) {
                         if (!candybars[id].element) continue;
                         candybars[id].update(data);
@@ -111,8 +113,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                 }
             },
 
-            getCandybars: function(context) {
-                return $.candybars[context] || {};
+            getCandybars: function(key) {
+                return $.candybars[key] || {};
             },
 
             /* Animation */

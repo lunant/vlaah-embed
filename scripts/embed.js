@@ -1,4 +1,4 @@
-{% include 'init.js' %}
+{% include 'scripts/init.js' %}
 (function(w) {
     var opt = w.vlaahEmbed.initOptions;
 

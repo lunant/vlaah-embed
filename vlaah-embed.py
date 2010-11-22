@@ -17,7 +17,8 @@ env.filters["urlencode"] = urllib.quote
 
 
 PROD_URLS = {
-  'topic_base': 'http://vlaah.com',
+        #  'topic_base': 'http://vlaah.com',
+        'topic_base': 'http://h.xym.kr:8912',
   'dynamic': 'http://dynamic.vlaah.com',
   'static': 'http://static.vlaah.com'
 }
@@ -29,7 +30,7 @@ class IndexHandler(webapp.RequestHandler):
   def get(self):
     domain = self.request.host
 
-    template = env.get_template('index.html')
+    template = env.get_template(os.path.join('templates', 'index.html'))
     self.response.out.write(template.render({
       'embed': 'http://' + domain + '/embed.js',
       'init': 'http://' + domain + '/init.js'
@@ -54,10 +55,10 @@ class ScriptHandler(webapp.RequestHandler):
     urls = (PROD_URLS if product else DEV_URLS).copy()
     urls.update(host=host)
 
-    template = env.get_template('candybar.html')
+    template = env.get_template(os.path.join('templates', 'candybar.html'))
     html = template.render(urls)
 
-    template = env.get_template(self.request.path)
+    template = env.get_template('scripts' + self.request.path)
     self.response.out.write(template.render({
       'html': html,
       'topic_base': urls['topic_base'],
