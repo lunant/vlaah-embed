@@ -1,5 +1,7 @@
 {% macro chipset(prefer) -%}
-  background: url('/static/chipsets/[[{{prefer}}Theme]].legacy_chipset.png');
+  background: url('
+    {{- host|e -}}
+  /static/chipsets/[[{{prefer}}Theme]].legacy_chipset.png');
   background-repeat: repeat-x;
 {%- endmacro %}
 
@@ -21,7 +23,7 @@
           onsubmit="vlaahEmbed.load('[[context]]', this); return false;"
           style="{{ cssreset() }} font-size: 0;">
       <input type="hidden" name="type" value="{{ prefer }}" />
-      <input src="/static/transparent.gif"
+      <input src="{{ host|e }}/static/transparent.gif"
              type="image" alt="{{ prefer }}"
              class="vlaah-{{ prefer }}-express" style="
                {{ cssreset() }}
@@ -47,7 +49,7 @@
     <form style="display: none; {{ cssreset() }}"
           onsubmit="vlaahEmbed.load('[[context]]', this); return false;">
       <input type="hidden" name="__method__" value="delete" />
-      <input src="/static/transparent.gif"
+      <input src="{{ host|e }}/static/transparent.gif"
              type="image" alt="{{ prefer }}"
              class="vlaah-plus-cancel" style="
                {{ cssreset() }}
