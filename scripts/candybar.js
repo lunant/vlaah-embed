@@ -108,10 +108,10 @@ function () {
         },
 
         update: function(data) {
-            var vlaah_score = data['pluses-count'] - data['minuses-count'];
+            var vlaah_score = data['plusesCount'] - data['minusesCount'];
             if (vlaah_score) {
-                var denominator = data['pluses-count'] + data['minuses-count'],
-                    percent = data['pluses-count'] / denominator * 100;
+                var denominator = data['plusesCount'] + data['minusesCount'],
+                    percent = data['plusesCount'] / denominator * 100;
             } else {
                 var percent = 50;
             }
